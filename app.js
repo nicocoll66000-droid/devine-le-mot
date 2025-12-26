@@ -1,39 +1,73 @@
 const defaultCategories = {
     "Harry Potter": [
         "Harry Potter","Hermione Granger","Ron Weasley","Dumbledore","Voldemort",
-        "Poudlard","Choixpeau","Nimbus 2000","Hagrid","Drago Malefoy"
+        "Poudlard","Choixpeau","Nimbus 2000","Hagrid","Drago Malefoy",
+        "Sirius Black","Rogue","Professeur McGonagall","Neville Londubat","Luna Lovegood",
+        "Ginny Weasley","Fred","George","Dolores Ombrage","Dobby",
+        "Bellatrix","Cedric Diggory","Viktor Krum","Grawp","Fumseck",
+        "Tonks","Peter Pettigrow","Filch","Moody","Quirinus Quirrell"
     ],
     "Disney": [
         "Mickey","Donald","Ariel","Simba","Elsa","Buzz l'Éclair",
-        "Woody","Cendrillon","Stitch","Aladdin"
+        "Woody","Cendrillon","Stitch","Aladdin","Belle","Jasmine","Mulan",
+        "Pocahontas","Aurore","Peter Pan","Tiana","Rapunzel","Hercule","Tarzan",
+        "Bambi","Dumbo","Raiponce","Olaf","Kristoff","Anna","Ursula","Gaston","Maléfique","Sully"
     ],
     "Nourriture": [
         "Pizza","Burger","Sushi","Raclette","Croissant",
-        "Pâtes","Fromage","Chocolat","Tacos","Crêpes"
+        "Pâtes","Fromage","Chocolat","Tacos","Crêpes",
+        "Baguette","Soupe","Salade","Lasagnes","Quiche",
+        "Mousse au chocolat","Glace","Steak","Poulet rôti","Poisson",
+        "Curry","Paella","Couscous","Riz","Nouilles",
+        "Gaufre","Pancakes","Beignets","Chili","Frites"
     ],
     "Manga / Anime": [
         "Naruto","Luffy","Goku","Sailor Moon","Attack des Titans",
-        "Death Note","One Piece","Demon Slayer","Bleach","Dragon Ball"
+        "Death Note","One Piece","Demon Slayer","Bleach","Dragon Ball",
+        "Ichigo","Sasuke","Hinata","Sakura","Kakashi",
+        "Natsu","Lucy","Erza","Gon","Killua",
+        "Levi","Eren","Mikasa","Tanjiro","Nezuko",
+        "L","Light","Kira","Yugi","Kaiba"
     ],
     "Pokémon": [
         "Pikachu","Dracaufeu","Bulbizarre","Mewtwo","Salamèche",
-        "Carapuce","Évoli","Ronflex","Lucario","Magicarpe"
+        "Carapuce","Évoli","Ronflex","Lucario","Magicarpe",
+        "Psykokwak","Lokhlass","Mélofée","Dracolosse","Nidoking",
+        "Arcanin","Alakazam","Florizarre","Tortank","Gardevoir",
+        "Ectoplasma","Mentali","Aquali","Noctali","Togepi",
+        "Mew","Rayquaza","Kyogre","Groudon","Palkia"
     ],
     "Marques connues": [
         "Nike","Adidas","Apple","Samsung","Coca-Cola",
-        "McDonald's","Amazon","Google","Netflix","PlayStation"
+        "McDonald's","Amazon","Google","Netflix","PlayStation",
+        "Sony","Microsoft","Intel","Facebook","Instagram",
+        "Twitter","Snapchat","Pepsi","Lego","Disney",
+        "Honda","Toyota","BMW","Mercedes","Ikea",
+        "H&M","Zara","Louis Vuitton","Gucci","Rolex"
     ],
     "Simpsons / South Park": [
         "Homer Simpson","Bart Simpson","Marge","Lisa",
-        "Cartman","Stan","Kyle","Kenny","Moe","Mr Burns"
+        "Cartman","Stan","Kyle","Kenny","Moe","Mr Burns",
+        "Mr Smithers","Krusty","Milhouse","Ralph","Nelson",
+        "Chef Wiggum","Apu","Troy McClure","Sideshow Bob","Principal Skinner",
+        "Cartman maman","Butters","Tweek","Randy Marsh","Sharon Marsh",
+        "Eric","Jimbo","Duffman","Mayor McDaniels","Helen Lovejoy"
     ],
     "Game of Thrones": [
         "Jon Snow","Daenerys","Tyrion","Arya Stark","Cersei",
-        "Sansa","Dragon","Trône de fer","Ned Stark","Winterfell"
+        "Sansa","Dragon","Trône de fer","Ned Stark","Winterfell",
+        "Jaime Lannister","Brienne","Sandor Clegane","Jorah Mormont","Petyr Baelish",
+        "Varys","Bran Stark","Theon Greyjoy","Samwell Tarly","Missandei",
+        "Grey Worm","Robb Stark","Ygritte","Hodor","Melisandre",
+        "Khal Drogo","Tommen","Margaery","Ramsay Bolton","Catelyn Stark"
     ],
     "Adultes": [
         "Levrette","Missionnaire","Menottes","Préliminaires","Fessée",
-        "Strip-tease","69","Huile de massage","Nuisette","Baiser passionné"
+        "Strip-tease","69","Huile de massage","Nuisette","Baiser passionné",
+        "Oral","Anal","Dominant","Soumission","Vibrateur",
+        "Lubrifiant","Érotique","Séduction","Tenue sexy","Jeu de rôle",
+        "Caresses","BDSM","Gode","Excitation","Masturbation",
+        "Plaisir","Érotisme","Fantasme","Orgasmique","Coquin"
     ]
 };
 
