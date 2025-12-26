@@ -3,9 +3,9 @@
   "short_name": "Devine",
   "start_url": "./index.html",
   "display": "standalone",
-  "categories": ["games", "entertainment"],
   "background_color": "#000000",
   "theme_color": "#000000",
+  "categories": ["games", "entertainment"],
   "icons": [
     {
       "src": "icon.png",
