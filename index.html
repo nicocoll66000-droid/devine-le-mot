@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Devine le mot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="categories-screen" class="screen active">
+    <h1>Choisis une catégorie</h1>
+    <div id="categories" class="grid"></div>
+    <button id="add-category">➕ Ajouter une catégorie</button>
+</div>
+
+<div id="add-screen" class="screen">
+    <h2>Nouvelle catégorie</h2>
+    <input id="new-cat-name" placeholder="Nom de la catégorie">
+    <textarea id="new-cat-words" placeholder="1 mot par ligne"></textarea>
+    <button id="save-category">Enregistrer</button>
+    <button onclick="showCategories()">Annuler</button>
+</div>
+<div id="game-screen" class="screen">
+    <div id="timer">01:00</div>
+    <div id="word" class="word">MOT</div>
+</div>
+
+<div id="result-screen" class="screen">
+    <h2>Résultat</h2>
+    <div id="score">Mots trouvés : 0</div>
+    <button id="replay">Rejouer</button>
+    <button id="back-categories">Retour catégories</button>
+</div>
+
+<script src="app.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+</body>
+</html>
