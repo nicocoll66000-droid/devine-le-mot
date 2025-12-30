@@ -1,22 +1,23 @@
-// Nom de votre cache. Changez la version (v1, v2, etc.) après chaque mise à jour majeure.
-const CACHE_NAME = 'devinemot-pwa-v1';
+// Nom de votre cache. Incrémentez la version (v1, v2, etc.) après chaque mise à jour.
+const CACHE_NAME = 'devinemot-pwa-v2'; // Version mise à jour pour inclure categories.json
 
 // Liste des URL à mettre en cache immédiatement lors de l'installation
 const urlsToCache = [
-  './', // Racine de l'application
+  './', 
   'index.html',
   'app.js',
   'style.css', 
   '/manifest.json',
+  // 🚨 AJOUT DU FICHIER DE DONNÉES 🚨
+  'categories.json', 
   'tictac.mp3', 
   'bomb.mp3', 
-  // 🚨 IMPORTANT : N'oubliez pas vos icônes (ex: /icons/icon-192x192.png)
+  // N'oubliez pas vos icônes (ex: /icons/icon-192x192.png)
 ];
 
 // Événement 'install' : le service worker met en cache les fichiers
 self.addEventListener('install', event => {
   console.log('[Service Worker] Installation...');
-  // Attend que tous les fichiers soient ajoutés au cache
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -26,9 +27,8 @@ self.addEventListener('install', event => {
   );
 });
 
-// Événement 'fetch' : intercepte les requêtes réseau
+// Événement 'fetch' : intercepte les requêtes réseau pour servir le cache
 self.addEventListener('fetch', event => {
-  // Répond avec la ressource mise en cache si elle est disponible
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -42,17 +42,17 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Événement 'activate' : nettoie les anciens caches
+// Événement 'activate' : nettoie les anciens caches pour économiser de l'espace
 self.addEventListener('activate', event => {
-  console.log('[Service Worker] Activation...');
+  console.log('[Service Worker] Activation et nettoyage des anciens caches...');
   const cacheWhitelist = [CACHE_NAME];
   
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
+          // Si le cacheName n'est pas dans la liste blanche, il est supprimé
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            // Supprime les vieux caches
             console.log('[Service Worker] Suppression du vieux cache:', cacheName);
             return caches.delete(cacheName);
           }
