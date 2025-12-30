@@ -1,55 +1,56 @@
-/* ==================================== */
-/* 1. RÉINITIALISATION GLOBALE & FOND */
-/* ==================================== */
+/*
+   ====================================
+   1. VARIABLES, FOND & RÉINITIALISATION
+   ====================================
+*/
 
 :root {
-    /* Variables de Couleurs */
-    --color-dark: #0A192F;      /* Bleu très foncé, principal */
-    --color-primary: #00DFFF;   /* Cyan lumineux (mots/éléments actifs) */
+    /* Variables de Couleurs pour Thème Sombre */
+    --color-dark: #0A192F;      /* Fond sombre principal (Bleu Nuit) */
+    --color-primary: #00DFFF;   /* Cyan lumineux (éléments actifs, mots) */
     --color-secondary: #FFD700; /* Or (timer) */
     --color-text: #E6F1FF;      /* Texte clair */
     --color-success: #00A86B;   /* Vert pour "Trouvé" */
-    --color-error: #D7263D;     /* Rouge pour "Passer" */
+    --color-error: #D7263D;     /* Rouge pour "Passé" */
+    --color-category-bg: #112240; /* Bleu foncé pour les cartes */
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Montserrat', sans-serif; /* Police plus moderne (à importer) */
+    font-family: Arial, Helvetica, sans-serif; /* Conserver Arial si vous ne voulez pas importer Google Fonts */
 }
 
 body {
-    /* Fond de l'application, très sombre pour l'immersion */
     background-color: var(--color-dark);
     color: var(--color-text);
-    height: 100dvh; /* Utiliser 100dvh pour le viewport dynamique sur mobile */
-    overflow: hidden; 
+    /* Utilisation de dvh (Dynamic Viewport Height) pour un vrai plein écran mobile */
+    height: 100dvh; 
+    /* 🚨 TRÈS IMPORTANT : Retirer overflow: hidden; du body */
     display: flex;
     flex-direction: column;
-    /* Transition douce pour les changements de couleur de fond (Trouvé/Passé) */
+    /* Transition douce pour le feedback Trouvé/Passé */
     transition: background-color 0.3s ease; 
 }
 
-/* Changement d'état global du fond */
-body.green-bg {
-    background-color: var(--color-success) !important;
-}
+/* Feedback visuel lors d'un geste */
+body.green-bg { background-color: var(--color-success) !important; }
+body.red-bg { background-color: var(--color-error) !important; }
 
-body.red-bg {
-    background-color: var(--color-error) !important;
-}
-
-/* ==================================== */
-/* 2. GESTION DES ÉCRANS GÉNÉRIQUES */
-/* ==================================== */
+/*
+   ====================================
+   2. GESTION DES ÉCRANS GÉNÉRIQUES
+   ====================================
+*/
 
 .screen {
-    display: none;
-    height: 100%; /* S'assurer que ça prend toute la hauteur disponible */
+    /* Règle CRITIQUE : Masque TOUS les écrans par défaut */
+    display: none; 
     width: 100%;
-    /* Centrage */
-    display: flex; 
+    height: 100%; /* Occupe toute la hauteur du body parent */
+    
+    /* Styles de centrage */
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -57,37 +58,50 @@ body.red-bg {
     padding: 20px;
 }
 
+/* Règle CRITIQUE : Affiche UNIQUEMENT l'écran ayant la classe "active" */
 .screen.active {
     display: flex;
 }
 
+/* Titres */
 h1 {
     font-size: 2.2em;
     margin-bottom: 25px;
     color: var(--color-primary);
 }
 
-h2 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
+.hint {
+    color: #8892B0;
+    margin-top: 15px;
+    font-style: italic;
 }
 
-/* ==================================== */
-/* 3. ÉCRAN CATÉGORIES */
-/* ==================================== */
+/*
+   ====================================
+   3. ÉCRAN CATÉGORIES (#categories-screen)
+   ====================================
+*/
+
+#categories-screen {
+    /* 🚨 CORRECTION DU BUG PAYSAGE : Permet le défilement si le contenu dépasse */
+    overflow-y: auto; 
+    
+    /* Aligne le contenu en haut (pour que le scroll commence bien au début) */
+    justify-content: flex-start; 
+}
 
 #categories {
-    width: 95%; /* Légèrement plus large que 90% */
-    max-width: 600px; /* Limite pour les grands écrans PC */
-    display: grid;
-    /* Mise à jour : meilleure gestion responsive des colonnes */
+    width: 95%; 
+    max-width: 600px;
+    /* Votre mise en page Grid responsive */
+    display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
     gap: 15px;
     padding: 20px 0;
 }
 
 .category {
-    background: #112240; /* Bleu un peu plus foncé */
+    background: var(--color-category-bg);
     border: 1px solid var(--color-primary); 
     color: var(--color-text);
     font-size: 16px;
@@ -100,21 +114,21 @@ h2 {
 
 .category:hover {
     background: #183055;
-    transform: translateY(-2px); /* Effet léger au survol (PC) */
+    transform: translateY(-2px);
 }
 
-.hint {
-    color: #8892B0;
-    margin-top: 15px;
-    font-style: italic;
-}
-
-/* ==================================== */
-/* 4. ÉCRAN JEU */
-/* ==================================== */
+/*
+   ====================================
+   4. ÉCRAN JEU (#game-screen)
+   ====================================
+*/
 
 #game-screen {
-    justify-content: space-between; /* Pour pousser le mot au milieu et le timer/controls aux extrémités */
+    /* Garantir la pleine hauteur */
+    height: 100dvh; 
+    width: 100vw;
+    /* Aligne Timer (haut), Word (milieu), Controls (bas) */
+    justify-content: space-between; 
 }
 
 .header {
@@ -130,7 +144,7 @@ h2 {
 }
 
 #word-container {
-    /* Le mot prend la majeure partie de l'écran */
+    /* Le conteneur du mot prend l'espace restant au centre */
     flex-grow: 1; 
     display: flex;
     justify-content: center;
@@ -139,8 +153,7 @@ h2 {
 }
 
 #word {
-    /* Taille et style du mot */
-    font-size: 3.5em; /* Grande taille pour mobile */
+    font-size: 3.5em; 
     font-weight: 900;
     color: var(--color-primary);
     padding: 30px;
@@ -149,43 +162,11 @@ h2 {
     max-width: 90%;
 }
 
-/* ==================================== */
-/* 5. BOUTONS (Générique et Écran de fin) */
-/* ==================================== */
-
-button {
-    padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-    font-weight: bold;
-    margin: 10px; /* Espacement entre les boutons */
-}
-
-.main-btn {
-    background-color: var(--color-primary);
-    color: var(--color-dark);
-}
-
-.main-btn:hover {
-    background-color: #5ac8e8;
-    transform: translateY(-1px);
-}
-
-.secondary-btn {
-    background-color: #334455;
-    color: var(--color-text);
-}
-
-.secondary-btn:hover {
-    background-color: #4A5B6C;
-}
-
-/* ==================================== */
-/* 6. CONTRÔLES (Boutons pour PC/Tablet) */
-/* ==================================== */
+/*
+   ====================================
+   5. CONTRÔLES (Boutons pour PC/Tablette)
+   ====================================
+*/
 
 .controls {
     display: flex;
@@ -200,16 +181,52 @@ button {
     border: 1px solid #444;
     font-size: 0.9em;
     padding: 10px 15px;
-    flex: 1; /* Remplissent l'espace */
+    flex: 1; 
     margin: 0 5px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
+/*
+   ====================================
+   6. BOUTONS GÉNÉRIQUES & ÉCRAN DE FIN
+   ====================================
+*/
+
+button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    font-weight: bold;
+    margin: 10px; 
+}
+
+.main-btn {
+    background-color: var(--color-primary);
+    color: var(--color-dark);
+}
+
+.secondary-btn {
+    background-color: #334455;
+    color: var(--color-text);
+}
+
+/*
+   ====================================
+   7. MEDIA QUERIES (Optimisations Mobile)
+   ====================================
+*/
+
 @media (max-width: 600px) {
-    /* Masquer les boutons de contrôle sur téléphone (car on utilise les gestes) */
+    /* Masquer les boutons de contrôle sur téléphone (on utilise les gestes) */
     .controls {
-        display: none; 
+        display: none !important; 
     }
 
+    /* Réduire légèrement la taille du mot pour les petits écrans */
     #word {
         font-size: 2.5em;
     }
