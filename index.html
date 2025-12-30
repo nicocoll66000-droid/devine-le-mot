@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-
-  <title>Devine le Mot</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devine le Mot | PWA</title>
+    
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> 
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="categories-screen" class="screen active">
-    <h1>Choisis une catégorie</h1>
-    <div id="categories" class="grid"></div>
-  </div>
-  <div id="game-screen" class="screen">
-    <div id="timer">01:00</div>
-    <div id="word" class="word">MOT</div>
-  </div>
-  <div id="result-screen" class="screen">
-    <h2>Résultat</h2>
-    <div id="score">Mots trouvés : 0</div>
+
+    <div id="categories-screen" class="screen active">
+        <h1>Choisissez une catégorie</h1>
+        <div id="categories">
+            </div>
+        <p class="hint">Touchez une catégorie pour commencer !</p>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="header">
+            <span id="timer">60</span>s
+        </div>
+
+        <div id="word-container">
+            <div id="word">Chargement...</div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn skip-btn" onclick="foundWord(false)">PASSER (Swipe Gauche/Droite ou ⬅️ ➡️)</button>
+            <button class="control-btn found-btn" onclick="foundWord(true)">TROUVÉ (Double Tap ou Espace)</button>
+        </div>
+    </div>
+
     <div id="result-screen" class="screen">
-    <h2>Résultat</h2>
-    <div id="score">Mots trouvés : 0</div>
-    <button id="replay">Rejouer</button>
-    <button id="back-categories">Retour catégories</button>
-</div>
-  </div>
-  <audio id="tick" src="tictac.mp3"></audio>
-  <audio id="bomb" src="bomb.mp3"></audio>
-  <script src="app.js"></script>
-</body>
+        <h2>Temps écoulé !</h2>
+        <p id="score">Mots trouvés : 0</p>
+        <button id="replay" class="main-btn">Rejouer la catégorie</button>
+        <button id="back-categories" class="secondary-btn">Changer de catégorie</button>
+    </div>
+
+    <script src="app.js"></script>
+    
+    </body>
 </html>
