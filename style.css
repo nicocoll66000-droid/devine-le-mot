@@ -1,11 +1,216 @@
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
-body{height:100vh;overflow:hidden;display:flex;flex-direction:column}
-.screen{display:none;height:100vh;width:100vw;justify-content:center;align-items:center;flex-direction:column;text-align:center}
-.screen.active{display:flex}
-#categories{width:90%;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;padding:20px}
-.category{background:#111;border:2px solid #333;color:#fff;font-size:18px;padding:20px 10px;border-radius:15px}
-#timer{font-size:36px;color:#ffd700;margin-bottom:40px}
-#word{font-size:48px;font-weight:bold;color:#00dfff;padding:30px}
-body.green-bg{background:#0a8f08}
-body.red-bg{background:#b00020}
-button{padding:15px 25px;font-size:18px;border-radius:12px;border:none}
+/* ==================================== */
+/* 1. RÉINITIALISATION GLOBALE & FOND */
+/* ==================================== */
+
+:root {
+    /* Variables de Couleurs */
+    --color-dark: #0A192F;      /* Bleu très foncé, principal */
+    --color-primary: #00DFFF;   /* Cyan lumineux (mots/éléments actifs) */
+    --color-secondary: #FFD700; /* Or (timer) */
+    --color-text: #E6F1FF;      /* Texte clair */
+    --color-success: #00A86B;   /* Vert pour "Trouvé" */
+    --color-error: #D7263D;     /* Rouge pour "Passer" */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif; /* Police plus moderne (à importer) */
+}
+
+body {
+    /* Fond de l'application, très sombre pour l'immersion */
+    background-color: var(--color-dark);
+    color: var(--color-text);
+    height: 100dvh; /* Utiliser 100dvh pour le viewport dynamique sur mobile */
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    /* Transition douce pour les changements de couleur de fond (Trouvé/Passé) */
+    transition: background-color 0.3s ease; 
+}
+
+/* Changement d'état global du fond */
+body.green-bg {
+    background-color: var(--color-success) !important;
+}
+
+body.red-bg {
+    background-color: var(--color-error) !important;
+}
+
+/* ==================================== */
+/* 2. GESTION DES ÉCRANS GÉNÉRIQUES */
+/* ==================================== */
+
+.screen {
+    display: none;
+    height: 100%; /* S'assurer que ça prend toute la hauteur disponible */
+    width: 100%;
+    /* Centrage */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+}
+
+h1 {
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    color: var(--color-primary);
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* ==================================== */
+/* 3. ÉCRAN CATÉGORIES */
+/* ==================================== */
+
+#categories {
+    width: 95%; /* Légèrement plus large que 90% */
+    max-width: 600px; /* Limite pour les grands écrans PC */
+    display: grid;
+    /* Mise à jour : meilleure gestion responsive des colonnes */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+    gap: 15px;
+    padding: 20px 0;
+}
+
+.category {
+    background: #112240; /* Bleu un peu plus foncé */
+    border: 1px solid var(--color-primary); 
+    color: var(--color-text);
+    font-size: 16px;
+    padding: 25px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    font-weight: bold;
+}
+
+.category:hover {
+    background: #183055;
+    transform: translateY(-2px); /* Effet léger au survol (PC) */
+}
+
+.hint {
+    color: #8892B0;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+/* ==================================== */
+/* 4. ÉCRAN JEU */
+/* ==================================== */
+
+#game-screen {
+    justify-content: space-between; /* Pour pousser le mot au milieu et le timer/controls aux extrémités */
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+}
+
+#timer {
+    font-size: 3em; 
+    font-weight: bold;
+    color: var(--color-secondary);
+}
+
+#word-container {
+    /* Le mot prend la majeure partie de l'écran */
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#word {
+    /* Taille et style du mot */
+    font-size: 3.5em; /* Grande taille pour mobile */
+    font-weight: 900;
+    color: var(--color-primary);
+    padding: 30px;
+    user-select: none; /* Empêche la sélection de texte lors du tapotage/glissement */
+    line-height: 1.2;
+    max-width: 90%;
+}
+
+/* ==================================== */
+/* 5. BOUTONS (Générique et Écran de fin) */
+/* ==================================== */
+
+button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    font-weight: bold;
+    margin: 10px; /* Espacement entre les boutons */
+}
+
+.main-btn {
+    background-color: var(--color-primary);
+    color: var(--color-dark);
+}
+
+.main-btn:hover {
+    background-color: #5ac8e8;
+    transform: translateY(-1px);
+}
+
+.secondary-btn {
+    background-color: #334455;
+    color: var(--color-text);
+}
+
+.secondary-btn:hover {
+    background-color: #4A5B6C;
+}
+
+/* ==================================== */
+/* 6. CONTRÔLES (Boutons pour PC/Tablet) */
+/* ==================================== */
+
+.controls {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 0 10px 30px; 
+}
+
+.control-btn {
+    background-color: #112240;
+    color: var(--color-text);
+    border: 1px solid #444;
+    font-size: 0.9em;
+    padding: 10px 15px;
+    flex: 1; /* Remplissent l'espace */
+    margin: 0 5px;
+}
+
+@media (max-width: 600px) {
+    /* Masquer les boutons de contrôle sur téléphone (car on utilise les gestes) */
+    .controls {
+        display: none; 
+    }
+
+    #word {
+        font-size: 2.5em;
+    }
+}
