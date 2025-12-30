@@ -1,0 +1,1 @@
+console.log('App prête – remplace par ton app.js V6 complet')
