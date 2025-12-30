@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const timerEl = document.getElementById("timer");
   const scoreEl = document.getElementById("score");
   const replayBtn = document.getElementById("replay");
-  const backBtn = document.getElementById("back");
+  const backBtn = document.getElementById("back-categories");
 
   const ticking = new Audio("tictac.mp3");
   const bomb = new Audio("bomb.mp3");
@@ -153,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showWord() {
     wordDiv.innerText = gameWords[currentIndex] || "";
+    wordDiv.style.color = "#00ffff"; // bleu clair
   }
 
   // ====== GESTES ======
@@ -171,11 +172,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tapLength = new Date().getTime() - lastTap;
 
     if (tapLength < 300 && tapLength > 0) {
-      // DOUBLE TAP = trouvé
       foundWord(true);
       lastTap = 0;
     } else if (Math.abs(endX - startX) > 50) {
-      // SWIPE = pas trouvé
       foundWord(false);
     } else {
       lastTap = new Date().getTime();
@@ -187,6 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.add("green-bg");
       ticking.pause();
       bomb.play();
+      foundCount++;
     } else {
       document.body.classList.add("red-bg");
     }
@@ -194,11 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navigator.vibrate) navigator.vibrate(100);
 
     setTimeout(() => {
-      document.body.classList.remove("green-bg", "red-bg");
+      document.body.classList.remove("green-bg","red-bg");
       nextWord();
     }, 300);
-
-    if (correct) foundCount++;
   }
 
   function nextWord() {
@@ -225,9 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ====== SHUFFLE ======
   function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+    for (let i = array.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [array[i],array[j]]=[array[j],array[i]];
     }
     return array;
   }
