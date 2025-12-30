@@ -1,56 +1,37 @@
-/*
-   ====================================
-   1. VARIABLES, FOND & RÉINITIALISATION
-   ====================================
-*/
-
-:root {
-    /* Variables de Couleurs pour Thème Sombre */
-    --color-dark: #0A192F;      /* Fond sombre principal (Bleu Nuit) */
-    --color-primary: #00DFFF;   /* Cyan lumineux (éléments actifs, mots) */
-    --color-secondary: #FFD700; /* Or (timer) */
-    --color-text: #E6F1FF;      /* Texte clair */
-    --color-success: #00A86B;   /* Vert pour "Trouvé" */
-    --color-error: #D7263D;     /* Rouge pour "Passé" */
-    --color-category-bg: #112240; /* Bleu foncé pour les cartes */
-}
-
+/* RESET et BASE */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif; /* Conserver Arial si vous ne voulez pas importer Google Fonts */
+    font-family: Arial, sans-serif;
 }
 
+/* Corps de l'application */
 body {
-    background-color: var(--color-dark);
-    color: var(--color-text);
-    /* Utilisation de dvh (Dynamic Viewport Height) pour un vrai plein écran mobile */
-    height: 100dvh; 
-    /* 🚨 TRÈS IMPORTANT : Retirer overflow: hidden; du body */
+    background: #222; /* Fond sombre simple */
+    color: #eee;
+    height: 100vh; /* Hauteur de l'écran */
     display: flex;
     flex-direction: column;
-    /* Transition douce pour le feedback Trouvé/Passé */
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s;
 }
 
-/* Feedback visuel lors d'un geste */
-body.green-bg { background-color: var(--color-success) !important; }
-body.red-bg { background-color: var(--color-error) !important; }
+/* Feedback rapide pour Trouvé/Passé */
+body.green-bg { background: #0a8f08 !important; }
+body.red-bg { background: #b00020 !important; }
 
-/*
-   ====================================
-   2. GESTION DES ÉCRANS GÉNÉRIQUES
-   ====================================
-*/
+/* --------------------------------- */
+/* GESTION DES ÉCRANS (CRITIQUE) */
+/* --------------------------------- */
 
 .screen {
-    /* Règle CRITIQUE : Masque TOUS les écrans par défaut */
+    /* Masque tous les écrans par défaut */
     display: none; 
     width: 100%;
-    height: 100%; /* Occupe toute la hauteur du body parent */
+    /* Prend la hauteur restante */
+    flex-grow: 1; 
     
-    /* Styles de centrage */
+    /* Centrage */
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -58,176 +39,100 @@ body.red-bg { background-color: var(--color-error) !important; }
     padding: 20px;
 }
 
-/* Règle CRITIQUE : Affiche UNIQUEMENT l'écran ayant la classe "active" */
+/* Affiche uniquement l'écran actif */
 .screen.active {
     display: flex;
 }
 
-/* Titres */
-h1 {
-    font-size: 2.2em;
-    margin-bottom: 25px;
-    color: var(--color-primary);
-}
+/* --------------------------------- */
+/* ÉCRAN CATÉGORIES (CORRECTION SCROLL) */
+/* --------------------------------- */
 
-.hint {
-    color: #8892B0;
-    margin-top: 15px;
-    font-style: italic;
-}
-
-/*
-   ====================================
-   3. ÉCRAN CATÉGORIES (#categories-screen)
-   ====================================
-*/
-
-#categories-screen {
-    /* 🚨 CORRECTION DU BUG PAYSAGE : Permet le défilement si le contenu dépasse */
-    overflow-y: auto; 
-    
-    /* Aligne le contenu en haut (pour que le scroll commence bien au début) */
-    justify-content: flex-start; 
+#categories-screen.active {
+    /* 🚨 Correction du bug Paysage : Défilement si besoin et alignement en haut */
+    overflow-y: auto;
+    justify-content: flex-start; /* Aligne le contenu en haut pour le scroll */
+    align-items: center;
 }
 
 #categories {
-    width: 95%; 
-    max-width: 600px;
-    /* Votre mise en page Grid responsive */
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+    width: 90%;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
     padding: 20px 0;
 }
 
 .category {
-    background: var(--color-category-bg);
-    border: 1px solid var(--color-primary); 
-    color: var(--color-text);
+    background: #444;
+    border: 1px solid #777;
+    color: #fff;
     font-size: 16px;
-    padding: 25px 10px;
-    border-radius: 10px;
+    padding: 15px 10px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-    font-weight: bold;
 }
 
-.category:hover {
-    background: #183055;
-    transform: translateY(-2px);
-}
-
-/*
-   ====================================
-   4. ÉCRAN JEU (#game-screen)
-   ====================================
-*/
+/* --------------------------------- */
+/* ÉCRAN JEU */
+/* --------------------------------- */
 
 #game-screen {
-    /* Garantir la pleine hauteur */
-    height: 100dvh; 
-    width: 100vw;
-    /* Aligne Timer (haut), Word (milieu), Controls (bas) */
+    /* Pour pousser le minuteur en haut et le mot au milieu */
     justify-content: space-between; 
 }
 
-.header {
-    width: 100%;
-    text-align: center;
+#timer {
+    font-size: 30px;
+    color: yellow;
+    margin-bottom: 20px;
     padding-top: 20px;
 }
 
-#timer {
-    font-size: 3em; 
-    font-weight: bold;
-    color: var(--color-secondary);
-}
-
 #word-container {
-    /* Le conteneur du mot prend l'espace restant au centre */
+    /* Prend l'espace pour que les gestes fonctionnent sur une large zone */
     flex-grow: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
 }
 
 #word {
-    font-size: 3.5em; 
-    font-weight: 900;
-    color: var(--color-primary);
+    font-size: 3em;
+    font-weight: bold;
+    color: cyan;
     padding: 30px;
-    user-select: none; /* Empêche la sélection de texte lors du tapotage/glissement */
-    line-height: 1.2;
-    max-width: 90%;
 }
 
-/*
-   ====================================
-   5. CONTRÔLES (Boutons pour PC/Tablette)
-   ====================================
-*/
+/* --------------------------------- */
+/* BOUTONS ET CONTRÔLES */
+/* --------------------------------- */
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
 
 .controls {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    padding: 0 10px 30px; 
+    padding: 0 10px 30px;
 }
 
 .control-btn {
-    background-color: #112240;
-    color: var(--color-text);
-    border: 1px solid #444;
-    font-size: 0.9em;
-    padding: 10px 15px;
-    flex: 1; 
     margin: 0 5px;
-    border-radius: 8px;
-    cursor: pointer;
+    background: #666;
+    color: #fff;
 }
-
-/*
-   ====================================
-   6. BOUTONS GÉNÉRIQUES & ÉCRAN DE FIN
-   ====================================
-*/
-
-button {
-    padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-    font-weight: bold;
-    margin: 10px; 
-}
-
-.main-btn {
-    background-color: var(--color-primary);
-    color: var(--color-dark);
-}
-
-.secondary-btn {
-    background-color: #334455;
-    color: var(--color-text);
-}
-
-/*
-   ====================================
-   7. MEDIA QUERIES (Optimisations Mobile)
-   ====================================
-*/
 
 @media (max-width: 600px) {
-    /* Masquer les boutons de contrôle sur téléphone (on utilise les gestes) */
+    /* Masquer les boutons de contrôle sur téléphone (gestes) */
     .controls {
         display: none !important; 
-    }
-
-    /* Réduire légèrement la taille du mot pour les petits écrans */
-    #word {
-        font-size: 2.5em;
     }
 }
